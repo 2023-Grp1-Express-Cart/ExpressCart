@@ -27,21 +27,23 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author norvinholness
+ * @author Group 1
  */
-public class Inventory {
+public final class Inventory extends VBox {
 
     Button _add_new_item_btn;
     Button _remove_Item_btn;
     Button _edit_Item_btn;
     Button _seller_home_btn;
 
-    VBox _inventory_page_layout;
-
     ArrayList<Item> _store_items;
     ObservableList<Item> _store_items_observable_list;
     ListView<Item> _store_items_list_view;
 
+    /**
+     * TODO
+     * @param primaryStage 
+     */
     public Inventory(Stage primaryStage) {
 
         _store_items = InventoryMgr.getStoreItemsList();
@@ -109,7 +111,7 @@ public class Inventory {
 
                     _store_items.get(index).setItemId(Integer.parseInt(item_id_text_field.getText()));
                     _store_items.get(index).setItemName(item_name_text_field.getText());
-                    _store_items.get(index).setItemUnitPrice(Double.parseDouble(item_unit_price_text_field.getText()));
+                    _store_items.get(index).setItemSellPrice(Double.parseDouble(item_unit_price_text_field.getText()));
                     _store_items.get(index).setItemInvoicePrice(Double.parseDouble(item_invoice_price_text_field.getText()));
                 }
 
@@ -173,22 +175,16 @@ public class Inventory {
         });
 
         _seller_home_btn = new Button("Home");
-        _seller_home_btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.SELLER_HOME);
-                primaryStage.setScene(s);
-            }
+        _seller_home_btn.setOnAction(e -> {
+            Scene seller_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.SELLER_HOME);
+            primaryStage.setScene(seller_home_scene);
         });
 
         HBox _store_action_buttons = new HBox(_seller_home_btn, _edit_Item_btn,
                 _add_new_item_btn, _remove_Item_btn);
         _store_action_buttons.setSpacing(10);
         _store_action_buttons.setAlignment(Pos.CENTER);
-        _inventory_page_layout = new VBox(_store_action_buttons, _store_items_list_view);
-    }
-
-    public VBox getLayout() {
-        return this._inventory_page_layout;
+        this.getChildren().add(_store_action_buttons);
+        this.getChildren().add(_store_items_list_view);
     }
 }

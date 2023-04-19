@@ -12,22 +12,24 @@ import javafx.stage.Stage;
 
 /**
  * 
- * @author norvinholness
+ * @author Group 1
  */
-public class ExpressCart extends Application {
+public final class ExpressCart extends Application {
 
     public static InventoryManager InventoryMgr;
     public static SceneFactory SceneGenerator;
-    private Home AppHome;
 
+    /**
+     * TODO
+     * @param primaryStage
+     * @throws IOException 
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
         
         InventoryMgr = InventoryManager.getInstance();
         SceneGenerator = new SceneFactory(primaryStage);
-        AppHome = new Home(primaryStage);
-        
-        Scene AppHomeScene = new Scene(AppHome.getLayout(), 600, 800);
+        Scene AppHomeScene = new Scene(new Home(primaryStage), 600, 800);
         primaryStage.setTitle("Welcome to ExpressCart");
         primaryStage.setScene(AppHomeScene);
         primaryStage.show();

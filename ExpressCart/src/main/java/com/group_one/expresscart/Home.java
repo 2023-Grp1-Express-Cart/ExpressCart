@@ -17,35 +17,29 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author norvinholness
+ * @author Group 1
  */
-public class Home {
-    
-    private final VBox _layout;
+public final class Home extends VBox {
+
     private final Label _welcome_label;
     private final Button _app_login_btn;
     
+    /**
+     * TODO
+     * @param primaryStage 
+     */
     public Home(Stage primaryStage){
         
         _welcome_label = new Label("Welcome to ExpressCart");
-        _layout = new VBox();
-        
         _app_login_btn = new Button("Login");
-        _app_login_btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.LOGIN);
-                primaryStage.setScene(s);
-            }
+        _app_login_btn.setOnAction(e -> {
+            Scene login_scene = SceneGenerator.GetScene(SceneFactory.SceneType.LOGIN);
+            primaryStage.setScene(login_scene);
         });
-        
-        _layout.getChildren().add(_welcome_label);
-        _layout.getChildren().add(_app_login_btn);
-        _layout.setAlignment(Pos.CENTER);
-        _layout.setPadding(new Insets(15));
-    }
-    
-    public VBox getLayout(){
-        return _layout;
+
+        this.getChildren().add(_welcome_label);
+        this.getChildren().add(_app_login_btn);
+        this.setAlignment(Pos.CENTER);
+        this.setPadding(new Insets(15));
     }
 }

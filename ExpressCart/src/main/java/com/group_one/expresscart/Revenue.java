@@ -6,7 +6,6 @@ package com.group_one.expresscart;
 
 import static com.group_one.expresscart.ExpressCart.InventoryMgr;
 import static com.group_one.expresscart.ExpressCart.SceneGenerator;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.event.ActionEvent;
@@ -25,48 +24,44 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author norvinholness
+ * @author Group 1
  */
-public class Revenue {
-
-    // Profit = Revenues - Costs,
-    // Revenues = Sum of sell price for all sold items
-    // Costs = Sum of invoice price for all items brought in the inventory (bought)
-    // profit = revenues - costs;
-    Label profit_label;
-    double profit = 0.0;
-    ArrayList<Item> _purchased_items;
-    BarChart<String, Float> bar;
-    VBox _layout;
-    Button _home_btn;
+public class Revenue extends VBox {
+    
+    private final Label profit_label;
+    private double profit = 0.0;
+    private final BarChart<String, Float> _bar_chart;
+    private final Button _home_btn;
 
     HashMap<String, Integer> ItemQuantityMap;
     HashMap<String, Double> ItemPriceMap;
 
-
+    /**
+     * 
+     * @param primaryStage 
+     */
     public Revenue(Stage primaryStage) {
-        _purchased_items = InventoryMgr.getPurchasedItemsList();
         
         ItemQuantityMap = new HashMap<>();
-        ItemPriceMap = new HashMap<>();
-        
-        for (Item i : _purchased_items) {
-            increment(ItemQuantityMap, i.getItemName());
-            double d = i.getItemInvoicePrice() - i.getItemSellPrice();
-            ItemPriceMap.putIfAbsent(i.getItemName(), d); 
+        ItemPriceMap    = new HashMap<>();
+        // Populate Profit and Quantity Maps
+        for (Item item : InventoryMgr.getPurchasedItemsList()) {
+            increment(ItemQuantityMap, item.getItemName());
+            double d = item.getItemInvoicePrice() - item.getItemSellPrice();
+            ItemPriceMap.putIfAbsent(item.getItemName(), d); 
         }
 
-        //Configuring category and NumberAxis   
+        // Configuring category and NumberAxis   
         CategoryAxis xaxis = new CategoryAxis();
         NumberAxis yaxis = new NumberAxis(0.0, 30, 5.0);
         xaxis.setLabel("Item");
         yaxis.setLabel("Quantity Sold");
 
-        //Configuring BarChart   
-        bar = new BarChart(xaxis, yaxis);
-        bar.setTitle("Revenue from Sales");
+        // Configuring BarChart   
+        _bar_chart = new BarChart(xaxis, yaxis);
+        _bar_chart.setTitle("Revenue from Sales");
 
-        //Configuring Series for XY chart   
+        // Configuring Series for XY chart   
         XYChart.Series<String, Float> series = new XYChart.Series<>();
         for (Map.Entry<String, Integer> set
                 : ItemQuantityMap.entrySet()) {
@@ -79,6 +74,7 @@ public class Revenue {
 
         _home_btn = new Button("Home");
         _home_btn.setOnAction(new EventHandler<ActionEvent>() {
+            // TODO
             @Override
             public void handle(ActionEvent e) {
                 Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.SELLER_HOME);
@@ -86,26 +82,26 @@ public class Revenue {
             }
         });
 
-        // TODO Legend
-        _layout = new VBox();
-
-        //Adding series to the barchart   
-        bar.getData().add(series);
+        // Adding series to the barchart   
+        _bar_chart.getData().add(series);
         
         profit_label = new Label();
         profit_label.setText("Profits From Sales: $" + String.valueOf(profit));
-
-        _layout.getChildren().add(_home_btn);
-        _layout.getChildren().add(profit_label);
-        _layout.getChildren().add(bar);
-        _layout.setAlignment(Pos.CENTER);
-        _layout.setPadding(new Insets(15));
+        
+        this.getChildren().add(_home_btn);
+        this.getChildren().add(profit_label);
+        this.getChildren().add(_bar_chart);
+        this.setAlignment(Pos.CENTER);
+        this.setPadding(new Insets(15));
     }
 
-    public VBox getLayout() {
-        return this._layout;
-    }
-
+    /**
+     * Method to add Key to a map if the Key doesn't exist, this method will
+     * also increment the count of the Key if it exist.
+     * @param <K>
+     * @param map The Map Objects to increment the value.
+     * @param key 
+     */
     public static <K> void increment(Map<K, Integer> map, K key) {
         map.putIfAbsent(key, 0);
         map.put(key, map.get(key) + 1);

@@ -6,7 +6,7 @@ package com.group_one.expresscart;
 
 /**
  *
- * @author norvinholness
+ * @author Group 1
  */
 public class Main {
     public static void main(String[] args) {

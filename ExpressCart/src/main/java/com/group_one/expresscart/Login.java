@@ -26,9 +26,9 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author norvinholness
+ * @author Group 1
  */
-public final class Login {
+public final class Login extends GridPane {
 
     final public String CUSTOMER_USERNAME = "c";
     final public String CUSTOMER_PASSWORD = "p";
@@ -40,7 +40,6 @@ public final class Login {
     final private RadioButton _seller_account_btn;
 
     final private ToggleGroup _group;
-    final private GridPane _layout;
     final private Text _scene_title;
 
     final private Label _username_label;
@@ -64,11 +63,10 @@ public final class Login {
 
         _sign_in_btn = new Button("Sign in");
 
-        _layout = new GridPane();
-        _layout.setAlignment(Pos.CENTER);
-        _layout.setHgap(10);
-        _layout.setVgap(10);
-        _layout.setPadding(new Insets(25, 25, 25, 25));
+        this.setAlignment(Pos.CENTER);
+        this.setHgap(10);
+        this.setVgap(10);
+        this.setPadding(new Insets(25, 25, 25, 25));
 
         _scene_title = new Text("User Login");
         _scene_title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -83,6 +81,7 @@ public final class Login {
         _alert.setTitle("Login Form Error!");
         _alert.setHeaderText(null);
         _sign_in_btn.setOnAction(new EventHandler<ActionEvent>() {
+            // TODO
             @Override
             public void handle(ActionEvent e) {
                 String username = String.valueOf(_username_text_field.getText());
@@ -100,11 +99,11 @@ public final class Login {
                     return;
                 }
 
-                boolean valid_customer = username.equals("c")
-                        && password.equals("p");
+                boolean valid_customer = username.equals(CUSTOMER_USERNAME)
+                        && password.equals(CUSTOMER_PASSWORD);
 
-                boolean valid_seller = username.equals("s")
-                        && password.equals("p");
+                boolean valid_seller = username.equals(SELLER_USERNAME)
+                        && password.equals(SELLER_PASSWORD);
 
                 if (valid_customer && _customer_account_btn.isSelected()) {
                     Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.CUSTOMER_HOME);
@@ -123,17 +122,13 @@ public final class Login {
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(_sign_in_btn);
 
-        _layout.add(_scene_title, 0, 0, 2, 1);
-        _layout.add(_username_label, 0, 1);
-        _layout.add(_username_text_field, 1, 1);
-        _layout.add(_password_label, 0, 2);
-        _layout.add(_password_text_field, 1, 2);
-        _layout.add(hbBtn, 1, 5);
-        _layout.add(_customer_account_btn, 1, 3);
-        _layout.add(_seller_account_btn, 1, 4);
-    }
-
-    public GridPane getLayout() {
-        return this._layout;
+        this.add(_scene_title, 0, 0, 2, 1);
+        this.add(_username_label, 0, 1);
+        this.add(_username_text_field, 1, 1);
+        this.add(_password_label, 0, 2);
+        this.add(_password_text_field, 1, 2);
+        this.add(hbBtn, 1, 5);
+        this.add(_customer_account_btn, 1, 3);
+        this.add(_seller_account_btn, 1, 4);
     }
 }

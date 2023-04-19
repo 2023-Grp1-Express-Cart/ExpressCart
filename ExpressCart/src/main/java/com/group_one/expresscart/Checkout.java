@@ -24,9 +24,9 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author norvinholness
+ * @author Group 1
  */
-public final class Checkout {
+public final class Checkout extends VBox{
 
     ArrayList<Item> _checkout_item_list;
     ListView<Item> _checkout_item_list_view;
@@ -60,8 +60,11 @@ public final class Checkout {
     final private Button _return_to_cart;
 
     final private GridPane _grid_layout;
-    final private VBox _vertical_box_layout;
 
+    /**
+     * TODO
+     * @param primaryStage 
+     */
     Checkout(Stage primaryStage) {
 
         _checkout_item_list = InventoryMgr.getShoppingCartItemsList();
@@ -120,19 +123,15 @@ public final class Checkout {
         _complete_order_btn.setOnAction(e -> {
             InventoryMgr.setPurchasedItemsList(_checkout_item_list);
             InventoryMgr.clearShoppingCart();
-            // TODO: Remove purchsed Items from Inventory.
-            // clear the list and update the view
-            Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.CUSTOMER_HOME);
-            primaryStage.setScene(s);
+            InventoryMgr.removeItemsFromInventory();
+            Scene customer_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.CUSTOMER_HOME);
+            primaryStage.setScene(customer_home_scene);
         });
 
         _return_to_cart = new Button("Return To Cart");
-        _return_to_cart.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.CUSTOMER_HOME);
-                primaryStage.setScene(s);
-            }
+        _return_to_cart.setOnAction(e -> {
+            Scene customer_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.CUSTOMER_HOME);
+            primaryStage.setScene(customer_home_scene);
         });
 
         HBox horizontal_buttons = new HBox(10);
@@ -140,19 +139,18 @@ public final class Checkout {
         horizontal_buttons.getChildren().add(_return_to_cart);
         horizontal_buttons.getChildren().add(_complete_order_btn);
         _grid_layout.add(horizontal_buttons, 1, 7, 2, 1);
-        _vertical_box_layout = new VBox();
-        _vertical_box_layout.getChildren().add(new Label("Review Order"));
-        _vertical_box_layout.getChildren().add(_checkout_item_list_view);
-        _vertical_box_layout.getChildren().add(SubTotal);
-        _vertical_box_layout.getChildren().add(Tax);
-        _vertical_box_layout.getChildren().add(Total);
-        _vertical_box_layout.getChildren().add(_grid_layout);
+        
+        this.getChildren().add(new Label("Review Order"));
+        this.getChildren().add(_checkout_item_list_view);
+        this.getChildren().add(SubTotal);
+        this.getChildren().add(Tax);
+        this.getChildren().add(Total);
+        this.getChildren().add(_grid_layout);
     }
 
-    public VBox getLayout() {
-        return this._vertical_box_layout;
-    }
-
+    /**
+     * TODO
+     */
     private void updateLabels() {
 
         for (Item i : _checkout_item_list) {

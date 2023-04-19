@@ -18,22 +18,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-// click on a product and get the full product description, pricing and availability
-//       (quantity available) in a pop-up window.
-// Done - The customer can add the product to the shopping cart (quantity), depending on availability.
-// Done - The shopping cart total amount is kept current on the main product browse window.
-// Done - The customer can proceed to checkout at any time.
-// On the checkout window, the shopping cart can be updated by changing the 
-//     item count for each product in the cart. At checkout the customer verifies
-//     the shopping cart content and pays for the goods by supplying the credit card.
-// The application does not arrange for shipping.
-// Done - list of available products that includes the product name, price, and available quantity.
-
 /**
  *
- * @author norvinholness
+ * @author Group 1
  */
-public class Customer {
+public final class Customer extends VBox {
 
     private ArrayList<Item> _shopping_cart_list;
     private ArrayList<Item> _wish_list;
@@ -62,12 +51,14 @@ public class Customer {
     private final Button moveToCartButton;
     private final Button customerlogoutBtn;
 
-    private final VBox layout;
-
     private final ObservableList<Item> observableList;
     private final ObservableList<Item> WishListobservableList;
     private final ObservableList<Item> ShoppingCartobservableList;
 
+    /**
+     * TODO
+     * @param primaryStage 
+     */
     public Customer(Stage primaryStage) {
         _store_item_list = InventoryMgr.getStoreItemsList();
         _shopping_cart_list = InventoryMgr.getShoppingCartItemsList();
@@ -145,6 +136,7 @@ public class Customer {
                 Item i = _wish_list.get(index);
                 _shopping_cart_list.add(i);
                 _wish_list.remove(i);
+                subTotal += i.getItemSellPrice();
                 updateLabels();
                 _shopping_cart_view.setItems(FXCollections.observableArrayList(_shopping_cart_list));
                 _wish_list_view.setItems(FXCollections.observableArrayList(_wish_list));
@@ -199,24 +191,32 @@ public class Customer {
         hb3.setSpacing(10);
         hb3.setAlignment(Pos.CENTER);
 
-        Label l1 = new Label("Available Items");
-        Label l2 = new Label("Cart");
-        Label l3 = new Label("Wish List");
-
-        layout = new VBox(l1, _item_view, hb1, l3,
-                _wish_list_view, hb3, l2, _shopping_cart_view,
-                hb2, labelForSubTotal, labelForTax, labelForTotal);
+        Label available_items_label = new Label("Available Items");
+        Label shopping_cart_label = new Label("Cart");
+        Label wish_list_label = new Label("Wish List");
+        
+        this.getChildren().add(available_items_label);
+        this.getChildren().add(_item_view);
+        this.getChildren().add(hb1);
+        this.getChildren().add(wish_list_label);
+        this.getChildren().add(_wish_list_view);
+        this.getChildren().add(hb3);
+        this.getChildren().add(shopping_cart_label);
+        this.getChildren().add(_shopping_cart_view);
+        this.getChildren().add(hb2);
+        this.getChildren().add(labelForSubTotal);
+        this.getChildren().add(labelForTax);
+        this.getChildren().add(labelForTotal);
     }
 
+    /**
+     * TODO
+     */
     private void updateLabels() {
         tax = subTotal * TAX_RATE;
         total = subTotal + tax;
         labelForSubTotal.setText(String.format("Sub Total: $%.2f", subTotal));
         labelForTax.setText(String.format("Tax: $%.2f", tax));
         labelForTotal.setText(String.format("Grand Total: $%.2f", total));
-    }
-
-    public VBox getLayout() {
-        return this.layout;
     }
 }

@@ -18,44 +18,57 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author norvinholness
+ * @author Group 1
  */
-
-public class Seller {
+public final class Seller extends VBox {
 
     private final Button _seller_logout_btn;
     private final Button _inventory_btn;
     private final Button _revenue_btn;
-    private final VBox _home_page_layout;
 
+    /**
+     * Constructor for seller scene
+     * @param primaryStage The Stage needed to 
+     */
     public Seller(Stage primaryStage) {
-
-        _home_page_layout = new VBox();
+        
         _seller_logout_btn = new Button("Log Out");
         _inventory_btn = new Button("Inventory");
         _revenue_btn = new Button("Revenue");
         
         _seller_logout_btn.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             * TODO
+             * @param e 
+             */
             @Override
             public void handle(ActionEvent e) {
-                Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.LOGIN);
-                primaryStage.setScene(s);
+                Scene login_scene = SceneGenerator.GetScene(SceneFactory.SceneType.LOGIN);
+                primaryStage.setScene(login_scene);
             }
         });
 
         _inventory_btn.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             * TODO
+             * @param e 
+             */
             @Override
             public void handle(ActionEvent e) {
-                Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.INVENTORY);
-                primaryStage.setScene(s);
+                Scene inventory_scene = SceneGenerator.GetScene(SceneFactory.SceneType.INVENTORY);
+                primaryStage.setScene(inventory_scene);
             }
         });
 
         _revenue_btn.setOnAction(new EventHandler<ActionEvent>() {
+            /**
+             * TODO
+             * @param e 
+             */
             @Override
             public void handle(ActionEvent e) {
-                Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.REVENUE);
-                primaryStage.setScene(s);
+                Scene reveneu_scene = SceneGenerator.GetScene(SceneFactory.SceneType.REVENUE);
+                primaryStage.setScene(reveneu_scene);
             }
         });
         
@@ -70,24 +83,7 @@ public class Seller {
         home_buttons.setSpacing(10);
         home_buttons.setAlignment(Pos.CENTER);
 
-        _home_page_layout.getChildren().add(welcome_banner);
-        _home_page_layout.getChildren().add(home_buttons);
-        
-    }
-
-    public VBox getLayout() {
-        return this._home_page_layout;
-    }
-
-    public Button getLogoutButton() {
-        return _seller_logout_btn;
-    }
-
-    public Button getInventoryButton() {
-        return _inventory_btn;
-    }
-
-    public Button getRevenueButton() {
-        return _revenue_btn;
+        this.getChildren().add(welcome_banner);
+        this.getChildren().add(home_buttons);
     }
 }
