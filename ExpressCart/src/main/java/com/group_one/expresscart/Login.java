@@ -20,8 +20,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
 /**
@@ -30,10 +28,10 @@ import javafx.stage.Stage;
  */
 public final class Login extends GridPane {
 
-    final public String CUSTOMER_USERNAME = "c";
-    final public String CUSTOMER_PASSWORD = "p";
-    final public String SELLER_USERNAME = "s";
-    final public String SELLER_PASSWORD = "p";
+    final public String CUSTOMER_USERNAME = "angelica";
+    final public String CUSTOMER_PASSWORD = "password";
+    final public String SELLER_USERNAME = "norvin";
+    final public String SELLER_PASSWORD = "password";
 
     final private Button _sign_in_btn;
     final private RadioButton _customer_account_btn;
@@ -50,6 +48,11 @@ public final class Login extends GridPane {
 
     Alert _alert;
 
+    /**
+     * The Constructor for Layout for the Login Page
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
+     */
     public Login(Stage primaryStage) {
 
         _customer_account_btn = new RadioButton("Customer Account");
@@ -80,41 +83,37 @@ public final class Login extends GridPane {
         _alert = new Alert(Alert.AlertType.ERROR);
         _alert.setTitle("Login Form Error!");
         _alert.setHeaderText(null);
-        _sign_in_btn.setOnAction(new EventHandler<ActionEvent>() {
-            // TODO
-            @Override
-            public void handle(ActionEvent e) {
-                String username = String.valueOf(_username_text_field.getText());
-                String password = String.valueOf(_password_text_field.getText());
+        _sign_in_btn.setOnAction(e -> {
+            String username = String.valueOf(_username_text_field.getText());
+            String password = String.valueOf(_password_text_field.getText());
 
-                if (username.equals("")) {
-                    _alert.setContentText("Please enter your Username");
-                    _alert.show();
-                    return;
-                }
+            if (username.equals("")) {
+                _alert.setContentText("Please enter your Username");
+                _alert.show();
+                return;
+            }
 
-                if (password.equals("")) {
-                    _alert.setContentText("Please enter your Password");
-                    _alert.show();
-                    return;
-                }
+            if (password.equals("")) {
+                _alert.setContentText("Please enter your Password");
+                _alert.show();
+                return;
+            }
 
-                boolean valid_customer = username.equals(CUSTOMER_USERNAME)
-                        && password.equals(CUSTOMER_PASSWORD);
+            boolean valid_customer = username.equals(CUSTOMER_USERNAME)
+                    && password.equals(CUSTOMER_PASSWORD);
 
-                boolean valid_seller = username.equals(SELLER_USERNAME)
-                        && password.equals(SELLER_PASSWORD);
+            boolean valid_seller = username.equals(SELLER_USERNAME)
+                    && password.equals(SELLER_PASSWORD);
 
-                if (valid_customer && _customer_account_btn.isSelected()) {
-                    Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.CUSTOMER_HOME);
-                    primaryStage.setScene(s);
-                } else if (valid_seller && _seller_account_btn.isSelected()) {
-                    Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.SELLER_HOME);
-                    primaryStage.setScene(s);
-                } else {
-                    _alert.setContentText("Please enter your correct Username and Password");
-                    _alert.show();
-                }
+            if (valid_customer && _customer_account_btn.isSelected()) {
+                Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.CUSTOMER_HOME);
+                primaryStage.setScene(s);
+            } else if (valid_seller && _seller_account_btn.isSelected()) {
+                Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.SELLER_HOME);
+                primaryStage.setScene(s);
+            } else {
+                _alert.setContentText("Please enter your correct Username and Password");
+                _alert.show();
             }
         });
 

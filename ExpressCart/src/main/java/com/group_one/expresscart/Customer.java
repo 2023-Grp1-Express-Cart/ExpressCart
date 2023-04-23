@@ -33,13 +33,8 @@ public final class Customer extends VBox {
     private ListView<Item> _wish_list_view;
 
     private final Label labelForSubTotal;
-    private final Label labelForTax;
-    private final Label labelForTotal;
 
     private double subTotal = 0.0;
-    private double tax = 0.0;
-    private double total = 0.0;
-    private final double TAX_RATE = 0.07;
 
     private final Button removeFromCartBtn;
     private final Button clearCartBtn;
@@ -56,13 +51,17 @@ public final class Customer extends VBox {
     private final ObservableList<Item> ShoppingCartobservableList;
 
     /**
-     * TODO
-     * @param primaryStage 
+     * The Constructor for Layout for the Customer Page
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
      */
     public Customer(Stage primaryStage) {
         _store_item_list = InventoryMgr.getStoreItemsList();
         _shopping_cart_list = InventoryMgr.getShoppingCartItemsList();
         _wish_list = InventoryMgr.getWishListItemsList();
+
+        labelForSubTotal = new Label("Sub Total: ");
+        updateLabels();
 
         observableList = FXCollections.observableArrayList(_store_item_list);
         _item_view = new ListView<>(observableList);
@@ -73,20 +72,14 @@ public final class Customer extends VBox {
         WishListobservableList = FXCollections.observableArrayList(_wish_list);
         _wish_list_view = new ListView<>(WishListobservableList);
 
-        labelForSubTotal = new Label("Sub Total: ");
-        labelForTax = new Label("Tax: ");
-        labelForTotal = new Label("Grand Total: ");
-
         addToCartBtn = new Button("Add To Cart");
         addToCartBtn.setOnAction(e -> {
-            _item_view.refresh();
             int index = _item_view.getSelectionModel().getSelectedIndex();
             if (index != -1) {
                 Item i = _store_item_list.get(index);
                 if (!_shopping_cart_list.contains(i) && !_wish_list.contains(i)) {
                     _shopping_cart_list.add(_store_item_list.get(index));
                     _shopping_cart_view.setItems(FXCollections.observableArrayList(_shopping_cart_list));
-                    subTotal += i.getItemSellPrice();
                     updateLabels();
                     InventoryMgr.setShoppingCartItemsList(_shopping_cart_list);
                 }
@@ -95,7 +88,6 @@ public final class Customer extends VBox {
 
         removeFromCartBtn = new Button("Remove From Cart");
         removeFromCartBtn.setOnAction(e -> {
-            _shopping_cart_view.refresh();
             int index = _shopping_cart_view.getSelectionModel().getSelectedIndex();
             if (index != -1) {
                 subTotal -= _shopping_cart_list.get(index).getItemSellPrice();
@@ -106,7 +98,7 @@ public final class Customer extends VBox {
             }
         });
 
-        addToWishListBtn = new Button("Add To Wish List"); // Remove from Cart then add to WishList
+        addToWishListBtn = new Button("Add To Wish List");
         addToWishListBtn.setOnAction(e -> {
             int index = _item_view.getSelectionModel().getSelectedIndex();
             if (index != -1) {
@@ -136,7 +128,6 @@ public final class Customer extends VBox {
                 Item i = _wish_list.get(index);
                 _shopping_cart_list.add(i);
                 _wish_list.remove(i);
-                subTotal += i.getItemSellPrice();
                 updateLabels();
                 _shopping_cart_view.setItems(FXCollections.observableArrayList(_shopping_cart_list));
                 _wish_list_view.setItems(FXCollections.observableArrayList(_wish_list));
@@ -150,16 +141,13 @@ public final class Customer extends VBox {
             _wish_list.clear();
             _wish_list_view.setItems(FXCollections.observableArrayList(_wish_list));
             InventoryMgr.setWishListItemsList(_wish_list);
-
         });
 
         clearCartBtn = new Button("Clear Cart");
         clearCartBtn.setOnAction(e -> {
-            subTotal = 0;
-            tax = 0;
-            total = 0;
-            updateLabels();
             _shopping_cart_list.clear();
+            subTotal = 0;
+            updateLabels();
             _shopping_cart_view.setItems(FXCollections.observableArrayList(_shopping_cart_list));
             InventoryMgr.setShoppingCartItemsList(_shopping_cart_list);
         });
@@ -168,26 +156,27 @@ public final class Customer extends VBox {
         checkoutBtn.setOnAction(e -> {
             updateLabels();
             InventoryMgr.setShoppingCartItemsList(_shopping_cart_list);
-            Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.CHECKOUT);
-            primaryStage.setScene(s);
+            Scene checkout_scene = SceneGenerator.GetScene(SceneFactory.SceneType.CHECKOUT);
+            assert (checkout_scene != null) : "Post Condition: Ensure next scene is valid object";
+            primaryStage.setScene(checkout_scene);
         });
 
         customerlogoutBtn = new Button("Log Out");
         customerlogoutBtn.setOnAction(e -> {
-            Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.APP_HOME);
-            primaryStage.setScene(s);
-
+            Scene app_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.APP_HOME);
+            assert (app_home_scene != null) : "Post Condition: Ensure next scene is valid object";
+            primaryStage.setScene(app_home_scene);
         });
 
         HBox hb1 = new HBox(addToCartBtn, addToWishListBtn);
         hb1.setSpacing(10);
         hb1.setAlignment(Pos.CENTER);
 
-        HBox hb2 = new HBox(removeFromCartBtn, clearCartBtn, checkoutBtn, customerlogoutBtn);
+        HBox hb2 = new HBox(moveToCartButton, removeFromWishListBtn, clearWishListBtn);
         hb2.setSpacing(10);
         hb2.setAlignment(Pos.CENTER);
 
-        HBox hb3 = new HBox(moveToCartButton, removeFromWishListBtn, clearWishListBtn);
+        HBox hb3 = new HBox(removeFromCartBtn, clearCartBtn, checkoutBtn, customerlogoutBtn);
         hb3.setSpacing(10);
         hb3.setAlignment(Pos.CENTER);
 
@@ -200,23 +189,22 @@ public final class Customer extends VBox {
         this.getChildren().add(hb1);
         this.getChildren().add(wish_list_label);
         this.getChildren().add(_wish_list_view);
-        this.getChildren().add(hb3);
+        this.getChildren().add(hb2);
         this.getChildren().add(shopping_cart_label);
         this.getChildren().add(_shopping_cart_view);
-        this.getChildren().add(hb2);
         this.getChildren().add(labelForSubTotal);
-        this.getChildren().add(labelForTax);
-        this.getChildren().add(labelForTotal);
+        this.getChildren().add(hb3);
     }
 
     /**
-     * TODO
+     * Method to update SubTotal and Total based on items in shopping cart.
      */
     private void updateLabels() {
-        tax = subTotal * TAX_RATE;
-        total = subTotal + tax;
+        
+        for (Item i : _shopping_cart_list){
+            subTotal+= i.getItemSellPrice();
+        }
+
         labelForSubTotal.setText(String.format("Sub Total: $%.2f", subTotal));
-        labelForTax.setText(String.format("Tax: $%.2f", tax));
-        labelForTotal.setText(String.format("Grand Total: $%.2f", total));
     }
 }

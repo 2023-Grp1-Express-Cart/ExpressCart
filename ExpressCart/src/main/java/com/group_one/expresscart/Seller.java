@@ -4,7 +4,6 @@
  */
 package com.group_one.expresscart;
 
-
 import static com.group_one.expresscart.ExpressCart.SceneGenerator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,8 +26,9 @@ public final class Seller extends VBox {
     private final Button _revenue_btn;
 
     /**
-     * Constructor for seller scene
-     * @param primaryStage The Stage needed to 
+     * The Constructor for Layout for the Seller Page
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
      */
     public Seller(Stage primaryStage) {
         
@@ -36,42 +36,24 @@ public final class Seller extends VBox {
         _inventory_btn = new Button("Inventory");
         _revenue_btn = new Button("Revenue");
         
-        _seller_logout_btn.setOnAction(new EventHandler<ActionEvent>() {
-            /**
-             * TODO
-             * @param e 
-             */
-            @Override
-            public void handle(ActionEvent e) {
-                Scene login_scene = SceneGenerator.GetScene(SceneFactory.SceneType.LOGIN);
-                primaryStage.setScene(login_scene);
-            }
+        _seller_logout_btn.setOnAction(e -> {
+            Scene login_scene = SceneGenerator.GetScene(SceneFactory.SceneType.LOGIN);
+            assert login_scene != null : "Precondition : Check that value is not null Object";
+            primaryStage.setScene(login_scene);
         });
 
-        _inventory_btn.setOnAction(new EventHandler<ActionEvent>() {
-            /**
-             * TODO
-             * @param e 
-             */
-            @Override
-            public void handle(ActionEvent e) {
-                Scene inventory_scene = SceneGenerator.GetScene(SceneFactory.SceneType.INVENTORY);
-                primaryStage.setScene(inventory_scene);
-            }
+        _inventory_btn.setOnAction(e -> {
+            Scene inventory_scene = SceneGenerator.GetScene(SceneFactory.SceneType.INVENTORY);
+            assert inventory_scene != null : "Precondition : Check that value is not null Object";
+            primaryStage.setScene(inventory_scene);
         });
 
-        _revenue_btn.setOnAction(new EventHandler<ActionEvent>() {
-            /**
-             * TODO
-             * @param e 
-             */
-            @Override
-            public void handle(ActionEvent e) {
-                Scene reveneu_scene = SceneGenerator.GetScene(SceneFactory.SceneType.REVENUE);
-                primaryStage.setScene(reveneu_scene);
-            }
+        _revenue_btn.setOnAction(e -> {
+            Scene revenue_scene = SceneGenerator.GetScene(SceneFactory.SceneType.REVENUE);
+            assert revenue_scene != null : "Precondition : Check that value is not null Object";
+            primaryStage.setScene(revenue_scene);
         });
-        
+
         HBox welcome_banner = new HBox();
         welcome_banner.getChildren().add(new Label("Welcome Seller"));
         welcome_banner.setAlignment(Pos.CENTER);

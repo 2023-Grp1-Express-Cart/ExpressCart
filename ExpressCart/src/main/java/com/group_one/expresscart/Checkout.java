@@ -6,14 +6,23 @@ package com.group_one.expresscart;
 
 import static com.group_one.expresscart.ExpressCart.InventoryMgr;
 import static com.group_one.expresscart.ExpressCart.SceneGenerator;
+import static com.group_one.expresscart.Revenue.increment;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -26,11 +35,11 @@ import javafx.stage.Stage;
  *
  * @author Group 1
  */
-public final class Checkout extends VBox{
+public final class Checkout extends VBox {
 
-    ArrayList<Item> _checkout_item_list;
-    ListView<Item> _checkout_item_list_view;
-    ObservableList<Item> _checkout_items_observable_list;
+    private ArrayList<Item> _checkout_item_list;
+    private ListView<Item> _checkout_item_list_view;
+    private ObservableList<Item> _checkout_items_observable_list;
 
     final private Label _first_name_label;
     final private TextField _first_name_text_field;
@@ -51,19 +60,23 @@ public final class Checkout extends VBox{
     final private Label Total;
     final private Label Tax;
     final private Label SubTotal;
-    private double subTotal = 0.0;
-    private double tax = 0.0;
-    private double total = 0.0;
+
     final double TAX_RATE = 0.07;
+    private double _subTotal = 0.0;
+    private double _tax = 0.0;
+    private double _total = 0.0;
 
     final private Button _complete_order_btn;
     final private Button _return_to_cart;
 
     final private GridPane _grid_layout;
+    
+    private Alert _alert;
 
     /**
-     * TODO
-     * @param primaryStage 
+     * The Constructor for Layout for the Checkout Page
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
      */
     Checkout(Stage primaryStage) {
 
@@ -121,11 +134,22 @@ public final class Checkout extends VBox{
 
         _complete_order_btn = new Button("Complete Order");
         _complete_order_btn.setOnAction(e -> {
-            InventoryMgr.setPurchasedItemsList(_checkout_item_list);
-            InventoryMgr.clearShoppingCart();
-            InventoryMgr.removeItemsFromInventory();
-            Scene customer_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.CUSTOMER_HOME);
-            primaryStage.setScene(customer_home_scene);
+            _alert = new Alert(AlertType.CONFIRMATION);
+            _alert.setTitle("Confirm Transaction");
+            _alert.setHeaderText(null);
+            String receipt = generateReceipt();
+            _alert.setContentText(receipt);
+            Optional<ButtonType> result = _alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                InventoryMgr.setPurchasedItemsList(_checkout_item_list);
+                InventoryMgr.clearShoppingCart();
+                InventoryMgr.removeItemsFromInventory();
+                updateLabels();
+                
+                Scene customer_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.CUSTOMER_HOME);
+                assert customer_home_scene != null : "Precondition : Check that value is not null Object";
+                primaryStage.setScene(customer_home_scene);
+            }
         });
 
         _return_to_cart = new Button("Return To Cart");
@@ -139,7 +163,7 @@ public final class Checkout extends VBox{
         horizontal_buttons.getChildren().add(_return_to_cart);
         horizontal_buttons.getChildren().add(_complete_order_btn);
         _grid_layout.add(horizontal_buttons, 1, 7, 2, 1);
-        
+
         this.getChildren().add(new Label("Review Order"));
         this.getChildren().add(_checkout_item_list_view);
         this.getChildren().add(SubTotal);
@@ -149,18 +173,70 @@ public final class Checkout extends VBox{
     }
 
     /**
-     * TODO
+     * Method to update the subtotal based on items in checkout list.
      */
     private void updateLabels() {
 
         for (Item i : _checkout_item_list) {
-            subTotal += i.getItemSellPrice();
+            _subTotal += i.getItemSellPrice();
         }
 
-        tax = subTotal * TAX_RATE;
-        total = subTotal + tax;
-        SubTotal.setText(String.format("Sub Total: $%.2f", subTotal));
-        Tax.setText(String.format("Tax: $%.2f", tax));
-        Total.setText(String.format("Grand Total: $%.2f", total));
+        _tax = _subTotal * TAX_RATE;
+        _total = _subTotal + _tax;
+        SubTotal.setText(String.format("Sub Total: $%.2f", _subTotal));
+        Tax.setText(String.format("Tax: $%.2f", _tax));
+        Total.setText(String.format("Grand Total: $%.2f", _total));
+    }
+    
+    /**
+     * Method to generate receipt based on items in the customer checkout list.
+     * @return String representing itemized receipt.
+     */
+    private String generateReceipt() {
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String strDate = dateFormat.format(date);
+        String receipt = "";
+        
+        receipt += "Time: " + strDate;
+        receipt += "\n";
+        
+        HashMap<String, Integer> ItemCountMap;
+        HashMap<String, Double> ItemPriceMap;
+        ItemCountMap = new HashMap<>();
+        ItemPriceMap = new HashMap<>();
+
+        // Populate Profit and Quantity Maps
+        for (Item item : _checkout_item_list) {
+            increment(ItemCountMap, item.getItemName());
+            ItemPriceMap.putIfAbsent(item.getItemName(), item.getItemSellPrice());
+        }
+        
+        for (Map.Entry<String, Integer> set
+                : ItemCountMap.entrySet()) {
+            String name  = set.getKey();
+            Double price = set.getValue() * ItemPriceMap.get(name);
+            int count = set.getValue();
+            String s = "(" + String.valueOf(count) + ") " + name + " - ($" + String.valueOf(price) + ")\n";
+            receipt += s; 
+        }
+        
+        String tax = String.format("%.0f",_tax);
+        String subTotal = String.format("%.0f",_subTotal);
+        String Total = String.format("%.0f",_total);
+        
+        receipt += "Sub Total = $(";
+//        receipt += String.valueOf(_subTotal);
+receipt += subTotal;
+        receipt += ")\n";
+        receipt += "Tax = $(";
+        receipt += tax;
+        receipt += ")\n";
+        receipt += "Grand Total = $(";
+//        receipt += String.valueOf(_total);
+receipt += Total;
+        receipt += ")\n";
+        
+        return receipt;
     }
 }

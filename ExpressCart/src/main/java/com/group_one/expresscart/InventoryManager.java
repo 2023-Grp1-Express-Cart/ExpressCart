@@ -26,10 +26,11 @@ public final class InventoryManager {
     public static ArrayList<Item> _store_items;
     public static ArrayList<Item> _shopping_cart_items;
     
-    final private String PURCHASED_ITEMS     = "Items/PurchasedItems.csv";
-    final private String WISHLIST_ITEMS      = "Items/WishListItems.csv";
-    final private String STORE_ITEMS         = "Items/StoreItems.csv";
-    final private String SHOPPING_CART_ITEMS = "Items/ShoppingCartItems.csv";
+    final private String PURCHASED_ITEMS     = "Files/PurchasedItems.csv";
+    final private String WISHLIST_ITEMS      = "Files/WishListItems.csv";
+    final private String STORE_ITEMS         = "Files/StoreItems.csv";
+    final private String SHOPPING_CART_ITEMS = "Files/ShoppingCartItems.csv";
+
     final private Map<String, ArrayList<Item>> ItemMap;
     
     /**
@@ -83,10 +84,16 @@ public final class InventoryManager {
             while (inFile.hasNext()) {
                 String input = inFile.nextLine();
                 String fieldsFromLine[] = input.split(",");
-                String item_name = fieldsFromLine[0].trim();
-                double item_invoice_price = Double.parseDouble(fieldsFromLine[1].trim());
-                double item_sell_price = Double.parseDouble(fieldsFromLine[2].trim());
-                Item item = new Item(item_name, item_invoice_price,item_sell_price);
+                int item_id = Integer.parseInt(fieldsFromLine[0].trim());
+                
+                if (Item_ID < item_id) {
+                    Item_ID = item_id;
+                }
+                
+                String item_name = fieldsFromLine[1].trim();
+                double item_invoice_price = Double.parseDouble(fieldsFromLine[2].trim());
+                double item_sell_price = Double.parseDouble(fieldsFromLine[3].trim());
+                Item item = new Item(item_id,item_name, item_invoice_price,item_sell_price);
                 ItemMap.get(fileName).add(item);
             }
 
@@ -137,6 +144,7 @@ public final class InventoryManager {
         for (Item i : items){
             _purchased_items.add(i);
         }
+        
         save(PURCHASED_ITEMS);
     }
     
@@ -191,11 +199,12 @@ public final class InventoryManager {
     }
     
     /**
-     * 
-     * @param items 
+     * Setter for Items in Customer Wish List
+     * @param items The items for the wish list
+     * @precondition item list is not null object.
      */
     public void setWishListItemsList(ArrayList<Item> items) {
-        assert (items != null ): "Precondition : Item Object not null";
+        assert (items != null): "Precondition : Item Object not null";
         _wishlist_items = items;
         save(WISHLIST_ITEMS);
     }
@@ -204,16 +213,13 @@ public final class InventoryManager {
      * Method to remove purchased items from seller inventory
      */
     public void removeItemsFromInventory(){
-        for (Item item : _purchased_items){
-            if (_store_items.contains(item)){
-                _store_items.remove(item);
-            }
-        }
+        _store_items.removeAll(_purchased_items);
+        save(STORE_ITEMS);
     }
     
     /**
-     * 
-     * @return 
+     * Method to generate a unique Id for each Item.
+     * @return ID
      */
     public static int GenerateItemId(){
         InventoryManager.Item_ID++;

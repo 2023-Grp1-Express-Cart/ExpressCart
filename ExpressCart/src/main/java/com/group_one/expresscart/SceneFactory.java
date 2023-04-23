@@ -28,7 +28,7 @@ public class SceneFactory {
     }
 
     private final int WIDTH = 600;
-    private final int HEIGHT = 800;
+    private final int HEIGHT = 750;
     private final Stage stage;
 
     private Scene revenue_scene = null;
@@ -39,18 +39,19 @@ public class SceneFactory {
     private Scene seller_home_scene = null;
     private Scene app_home_scene = null;
 
-    /**
-     *
-     * @param primaryStage
+  /**
+     * Method to Construct the Scene Factory Design
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
      */
     public SceneFactory(Stage primaryStage) {
         stage = primaryStage;
     }
 
     /**
-     *
-     * @param scenetype
-     * @return
+     * Method to create a Scene based on the type specified
+     * @param scenetype An enumerated type for the different scenes available.
+     * @return a new Scene Object with the specified scene type
      */
     public Scene GetScene(SceneType scenetype) {
 

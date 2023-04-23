@@ -27,6 +27,20 @@ public final class Item {
         this._invoice_price = invoice_price;
         this._sell_price = sell_price;
     }
+    
+    /**
+     * Constructor for an Item
+     * @param id The ID for the Item
+     * @param name The desired name of the Item
+     * @param invoice_price The invoice price for the item
+     * @param sell_price The sell price for the item
+     */
+    public Item(int id, String name, double invoice_price, double sell_price) {
+        this._id = id;
+        this._item_name = name;
+        this._invoice_price = invoice_price;
+        this._sell_price = sell_price;
+    }
 
     /**
      * Getter for Item Name.
@@ -104,6 +118,34 @@ public final class Item {
     public String toString() {
         return String.valueOf(this._id) + "\t" + this._item_name + "\t ($" + this._sell_price + ")";
     }
+    
+    /**
+     * Overriding equals() to compare two Item objects
+     * @param o
+     * @return True if Items are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+ 
+        // If the object is compared with itself then return true 
+        if (o == this) {
+            return true;
+        }
+ 
+        /* Check if o is an instance of Item or not
+          "null instanceof [type]" also returns false */
+        if (!(o instanceof Item)) {
+            return false;
+        }
+         
+        // typecast o to Complex so that we can compare data members
+        Item i = (Item) o;
+        
+        return ( (i.getItemId() == this._id) &&
+                 (i.getItemName().equals(this._item_name)) &&
+                 (Double.compare(i.getItemSellPrice(), this._sell_price) == 0) &&
+                 (Double.compare(i.getItemInvoicePrice(), this._invoice_price) == 0));
+    }
 
     /**
      * Method to convert Item data to a CSV string.
@@ -113,6 +155,8 @@ public final class Item {
     public static String toCsvString(Item item) {
         assert (item != null): "Precondition : Item not a null object";
         String s = "";
+        s += String.valueOf(item.getItemId());
+        s += ",";
         s += item.getItemName();
         s += ",";
         s += String.valueOf(item.getItemInvoicePrice());

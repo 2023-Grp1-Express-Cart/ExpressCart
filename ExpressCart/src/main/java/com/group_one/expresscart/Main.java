@@ -9,6 +9,11 @@ package com.group_one.expresscart;
  * @author Group 1
  */
 public class Main {
+    
+    /**
+     * Main method to Launch the application
+     * @param args - the command line arguments passed to the application.
+     */
     public static void main(String[] args) {
         ExpressCart.main(args);
     }

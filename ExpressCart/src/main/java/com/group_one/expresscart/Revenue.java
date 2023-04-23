@@ -27,23 +27,25 @@ import javafx.stage.Stage;
  * @author Group 1
  */
 public class Revenue extends VBox {
-    
-    private final Label profit_label;
-    private double profit = 0.0;
+
     private final BarChart<String, Float> _bar_chart;
     private final Button _home_btn;
+    private final Label profit_label;
+    private double profit = 0.0;
 
     HashMap<String, Integer> ItemQuantityMap;
     HashMap<String, Double> ItemPriceMap;
 
     /**
-     * 
-     * @param primaryStage 
+     * The Constructor for Layout for the Revenue Page
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
      */
     public Revenue(Stage primaryStage) {
         
         ItemQuantityMap = new HashMap<>();
-        ItemPriceMap    = new HashMap<>();
+        ItemPriceMap = new HashMap<>();
+
         // Populate Profit and Quantity Maps
         for (Item item : InventoryMgr.getPurchasedItemsList()) {
             increment(ItemQuantityMap, item.getItemName());
@@ -73,19 +75,18 @@ public class Revenue extends VBox {
         }
 
         _home_btn = new Button("Home");
-        _home_btn.setOnAction(new EventHandler<ActionEvent>() {
-            // TODO
-            @Override
-            public void handle(ActionEvent e) {
-                Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.SELLER_HOME);
-                primaryStage.setScene(s);
-            }
+        _home_btn.setOnAction(e -> {
+            Scene seller_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.SELLER_HOME);
+            assert seller_home_scene != null : "Precondition : Check that value is not null Object";
+            primaryStage.setScene(seller_home_scene);
         });
 
         // Adding series to the barchart   
         _bar_chart.getData().add(series);
         
         profit_label = new Label();
+        // FIX ME: Temp Fix to Profit calcualtion
+        profit = Math.abs(profit);
         profit_label.setText("Profits From Sales: $" + String.valueOf(profit));
         
         this.getChildren().add(_home_btn);

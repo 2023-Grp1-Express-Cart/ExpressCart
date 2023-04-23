@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -41,8 +39,9 @@ public final class Inventory extends VBox {
     ListView<Item> _store_items_list_view;
 
     /**
-     * TODO
-     * @param primaryStage 
+     * The Constructor for Layout for the Inventory Page
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
      */
     public Inventory(Stage primaryStage) {
 
@@ -177,6 +176,7 @@ public final class Inventory extends VBox {
         _seller_home_btn = new Button("Home");
         _seller_home_btn.setOnAction(e -> {
             Scene seller_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.SELLER_HOME);
+            assert seller_home_scene != null : "Precondition : Check that value is not null Object";
             primaryStage.setScene(seller_home_scene);
         });
 
