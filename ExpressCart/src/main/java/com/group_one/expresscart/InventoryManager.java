@@ -26,12 +26,12 @@ public final class InventoryManager {
     public static ArrayList<Item> _store_items;
     public static ArrayList<Item> _shopping_cart_items;
     
-    final private String PURCHASED_ITEMS     = "Files/PurchasedItems.csv";
-    final private String WISHLIST_ITEMS      = "Files/WishListItems.csv";
-    final private String STORE_ITEMS         = "Files/StoreItems.csv";
-    final private String SHOPPING_CART_ITEMS = "Files/ShoppingCartItems.csv";
+    private final String PURCHASED_ITEMS = "Files/PurchasedItems.csv";
+    private final String WISHLIST_ITEMS = "Files/WishListItems.csv";
+    private final String STORE_ITEMS = "Files/StoreItems.csv";
+    private final String SHOPPING_CART_ITEMS = "Files/ShoppingCartItems.csv";
 
-    final private Map<String, ArrayList<Item>> ItemMap;
+    private final Map<String, ArrayList<Item>> ItemMap;
     
     /**
      * The Constructor for a New Inventory Manager Object
@@ -56,7 +56,7 @@ public final class InventoryManager {
     /**
      * Method to Initialize the Inventory Manager Object if it is Null.
      * @return The Singleton instance of the Inventory Manager Object.
-     * @postcondition Inventory Manager object is not Null
+     * Post conditions Inventory Manager object is not Null
      */
     public static synchronized InventoryManager getInstance() {
         if (_inventory_manager_instance == null) {
@@ -71,7 +71,7 @@ public final class InventoryManager {
      * Method to load CSV file
      * @param fileName The name of the file
      * @throws FileNotFoundException, if filename cannot be found.
-     * @precondition fileName length must be greater than 0.
+//     * @precondition fileName length must be greater than 0.
      */
     private void load(String fileName) {
         
@@ -110,7 +110,7 @@ public final class InventoryManager {
      * @throws IOException, if the named file exists but is a directory rather
      *         than a regular file, does not exist but cannot be
      *         created, or cannot be opened for any other reason
-     * @precondition fileName length must be greater than 0.
+     * Preconditions fileName length must be greater than 0.
      */
     private void save(String fileName) {
 
@@ -201,7 +201,7 @@ public final class InventoryManager {
     /**
      * Setter for Items in Customer Wish List
      * @param items The items for the wish list
-     * @precondition item list is not null object.
+     * Post conditions item list is not null object.
      */
     public void setWishListItemsList(ArrayList<Item> items) {
         assert (items != null): "Precondition : Item Object not null";

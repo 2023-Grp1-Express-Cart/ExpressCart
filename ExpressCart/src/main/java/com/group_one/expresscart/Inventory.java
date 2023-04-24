@@ -29,14 +29,14 @@ import javafx.stage.Stage;
  */
 public final class Inventory extends VBox {
 
-    Button _add_new_item_btn;
-    Button _remove_Item_btn;
-    Button _edit_Item_btn;
-    Button _seller_home_btn;
+    private final Button _add_new_item_btn;
+    private final Button _remove_Item_btn;
+    private final Button _edit_Item_btn;
+    private final Button _seller_home_btn;
 
-    ArrayList<Item> _store_items;
-    ObservableList<Item> _store_items_observable_list;
-    ListView<Item> _store_items_list_view;
+    private final ArrayList<Item> _store_items;
+    private final ObservableList<Item> _store_items_observable_list;
+    private final ListView<Item> _store_items_list_view;
 
     /**
      * The Constructor for Layout for the Inventory Page

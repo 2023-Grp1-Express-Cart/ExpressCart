@@ -24,13 +24,13 @@ import javafx.stage.Stage;
  */
 public final class Customer extends VBox {
 
-    private ArrayList<Item> _shopping_cart_list;
-    private ArrayList<Item> _wish_list;
-    private ArrayList<Item> _store_item_list;
+    private final  ArrayList<Item> _shopping_cart_list;
+    private final  ArrayList<Item> _wish_list;
+    private final  ArrayList<Item> _store_item_list;
 
-    private ListView<Item> _item_view;
-    private ListView<Item> _shopping_cart_view;
-    private ListView<Item> _wish_list_view;
+    private final  ListView<Item> _item_view;
+    private final  ListView<Item> _shopping_cart_view;
+    private final  ListView<Item> _wish_list_view;
 
     private final Label labelForSubTotal;
 
@@ -61,7 +61,6 @@ public final class Customer extends VBox {
         _wish_list = InventoryMgr.getWishListItemsList();
 
         labelForSubTotal = new Label("Sub Total: ");
-        updateLabels();
 
         observableList = FXCollections.observableArrayList(_store_item_list);
         _item_view = new ListView<>(observableList);
@@ -200,7 +199,7 @@ public final class Customer extends VBox {
      * Method to update SubTotal and Total based on items in shopping cart.
      */
     private void updateLabels() {
-        
+        subTotal = 0.0;
         for (Item i : _shopping_cart_list){
             subTotal+= i.getItemSellPrice();
         }

@@ -37,44 +37,44 @@ import javafx.stage.Stage;
  */
 public final class Checkout extends VBox {
 
-    private ArrayList<Item> _checkout_item_list;
-    private ListView<Item> _checkout_item_list_view;
-    private ObservableList<Item> _checkout_items_observable_list;
+    private final ArrayList<Item> _checkout_item_list;
+    private final ListView<Item> _checkout_item_list_view;
+    private final ObservableList<Item> _checkout_items_observable_list;
 
-    final private Label _first_name_label;
-    final private TextField _first_name_text_field;
-    final private Label _last_name_label;
-    final private TextField _last_name_text_field;
-    final private Label _street_address_label;
-    final private TextField _street_address_text_field;
-    final private Label _city_label;
-    final private TextField _city_text_field;
-    final private Label _state_label;
-    final private TextField _state_text_field;
-    final private Label _zip_code_label;
-    final private TextField _zip_code_text_field;
+    private final Label _first_name_label;
+    private final TextField _first_name_text_field;
+    private final Label _last_name_label;
+    private final TextField _last_name_text_field;
+    private final Label _street_address_label;
+    private final TextField _street_address_text_field;
+    private final Label _city_label;
+    private final TextField _city_text_field;
+    private final Label _state_label;
+    private final TextField _state_text_field;
+    private final Label _zip_code_label;
+    private final TextField _zip_code_text_field;
 
-    final private Label _credit_card_info_label;
-    final private TextField _credit_card_text_field;
+    private final Label _credit_card_info_label;
+    private final TextField _credit_card_text_field;
 
-    final private Label Total;
-    final private Label Tax;
-    final private Label SubTotal;
+    private final Label Total;
+    private final Label Tax;
+    private final Label SubTotal;
 
-    final double TAX_RATE = 0.07;
+    private final double TAX_RATE = 0.07;
     private double _subTotal = 0.0;
     private double _tax = 0.0;
     private double _total = 0.0;
 
-    final private Button _complete_order_btn;
-    final private Button _return_to_cart;
+    private final Button _complete_order_btn;
+    private final Button _return_to_cart;
+    private final GridPane _grid_layout;
 
-    final private GridPane _grid_layout;
-    
     private Alert _alert;
 
     /**
      * The Constructor for Layout for the Checkout Page
+     *
      * @param primaryStage the primary stage for this application, onto which
      * the application scene can be set.
      */
@@ -145,7 +145,7 @@ public final class Checkout extends VBox {
                 InventoryMgr.clearShoppingCart();
                 InventoryMgr.removeItemsFromInventory();
                 updateLabels();
-                
+
                 Scene customer_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.CUSTOMER_HOME);
                 assert customer_home_scene != null : "Precondition : Check that value is not null Object";
                 primaryStage.setScene(customer_home_scene);
@@ -187,9 +187,10 @@ public final class Checkout extends VBox {
         Tax.setText(String.format("Tax: $%.2f", _tax));
         Total.setText(String.format("Grand Total: $%.2f", _total));
     }
-    
+
     /**
      * Method to generate receipt based on items in the customer checkout list.
+     *
      * @return String representing itemized receipt.
      */
     private String generateReceipt() {
@@ -197,10 +198,11 @@ public final class Checkout extends VBox {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         String strDate = dateFormat.format(date);
         String receipt = "";
-        
+
         receipt += "Time: " + strDate;
         receipt += "\n";
-        
+        receipt += "==============\n";
+
         HashMap<String, Integer> ItemCountMap;
         HashMap<String, Double> ItemPriceMap;
         ItemCountMap = new HashMap<>();
@@ -211,32 +213,31 @@ public final class Checkout extends VBox {
             increment(ItemCountMap, item.getItemName());
             ItemPriceMap.putIfAbsent(item.getItemName(), item.getItemSellPrice());
         }
-        
+
         for (Map.Entry<String, Integer> set
                 : ItemCountMap.entrySet()) {
-            String name  = set.getKey();
+            String name = set.getKey();
             Double price = set.getValue() * ItemPriceMap.get(name);
             int count = set.getValue();
             String s = "(" + String.valueOf(count) + ") " + name + " - ($" + String.valueOf(price) + ")\n";
-            receipt += s; 
+            receipt += s;
         }
-        
-        String tax = String.format("%.0f",_tax);
-        String subTotal = String.format("%.0f",_subTotal);
-        String Total = String.format("%.0f",_total);
-        
+
+        String tax = String.format("%.0f", _tax);
+        String subTotal = String.format("%.0f", _subTotal);
+        String Total = String.format("%.0f", _total);
+
+        receipt += "==============\n";
         receipt += "Sub Total = $(";
-//        receipt += String.valueOf(_subTotal);
-receipt += subTotal;
+        receipt += subTotal;
         receipt += ")\n";
         receipt += "Tax = $(";
         receipt += tax;
         receipt += ")\n";
         receipt += "Grand Total = $(";
-//        receipt += String.valueOf(_total);
-receipt += Total;
+        receipt += Total;
         receipt += ")\n";
-        
+
         return receipt;
     }
 }

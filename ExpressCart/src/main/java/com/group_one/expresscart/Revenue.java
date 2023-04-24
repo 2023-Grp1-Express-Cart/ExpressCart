@@ -8,8 +8,6 @@ import static com.group_one.expresscart.ExpressCart.InventoryMgr;
 import static com.group_one.expresscart.ExpressCart.SceneGenerator;
 import java.util.HashMap;
 import java.util.Map;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -55,7 +53,7 @@ public class Revenue extends VBox {
 
         // Configuring category and NumberAxis   
         CategoryAxis xaxis = new CategoryAxis();
-        NumberAxis yaxis = new NumberAxis(0.0, 30, 5.0);
+        NumberAxis yaxis = new NumberAxis(0.0, 10, 1.0);
         xaxis.setLabel("Item");
         yaxis.setLabel("Quantity Sold");
 

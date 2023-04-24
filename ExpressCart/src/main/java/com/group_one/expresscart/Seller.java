@@ -5,8 +5,6 @@
 package com.group_one.expresscart;
 
 import static com.group_one.expresscart.ExpressCart.SceneGenerator;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

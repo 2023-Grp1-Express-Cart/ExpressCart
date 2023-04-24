@@ -118,34 +118,6 @@ public final class Item {
     public String toString() {
         return String.valueOf(this._id) + "\t" + this._item_name + "\t ($" + this._sell_price + ")";
     }
-    
-    /**
-     * Overriding equals() to compare two Item objects
-     * @param o
-     * @return True if Items are equal, false otherwise.
-     */
-    @Override
-    public boolean equals(Object o) {
- 
-        // If the object is compared with itself then return true 
-        if (o == this) {
-            return true;
-        }
- 
-        /* Check if o is an instance of Item or not
-          "null instanceof [type]" also returns false */
-        if (!(o instanceof Item)) {
-            return false;
-        }
-         
-        // typecast o to Complex so that we can compare data members
-        Item i = (Item) o;
-        
-        return ( (i.getItemId() == this._id) &&
-                 (i.getItemName().equals(this._item_name)) &&
-                 (Double.compare(i.getItemSellPrice(), this._sell_price) == 0) &&
-                 (Double.compare(i.getItemInvoicePrice(), this._invoice_price) == 0));
-    }
 
     /**
      * Method to convert Item data to a CSV string.

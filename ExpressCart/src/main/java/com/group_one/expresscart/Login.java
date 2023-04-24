@@ -28,23 +28,23 @@ import javafx.stage.Stage;
  */
 public final class Login extends GridPane {
 
-    final public String CUSTOMER_USERNAME = "angelica";
-    final public String CUSTOMER_PASSWORD = "password";
-    final public String SELLER_USERNAME = "norvin";
-    final public String SELLER_PASSWORD = "password";
+    public final String CUSTOMER_USERNAME = "customer";
+    public final String CUSTOMER_PASSWORD = "password";
+    public final String SELLER_USERNAME = "seller";
+    public final String SELLER_PASSWORD = "password";
 
-    final private Button _sign_in_btn;
-    final private RadioButton _customer_account_btn;
-    final private RadioButton _seller_account_btn;
+    private final Button _sign_in_btn;
+    private final RadioButton _customer_account_btn;
+    private final RadioButton _seller_account_btn;
 
-    final private ToggleGroup _group;
-    final private Text _scene_title;
+    private final ToggleGroup _group;
+    private final Text _scene_title;
 
-    final private Label _username_label;
-    final private TextField _username_text_field;
-    final private Label _password_label;
-    final private PasswordField _password_text_field;
-    final private HBox hbBtn;
+    private final Label _username_label;
+    private final TextField _username_text_field;
+    private final Label _password_label;
+    private final PasswordField _password_text_field;
+    private final HBox hbBtn;
 
     Alert _alert;
 
