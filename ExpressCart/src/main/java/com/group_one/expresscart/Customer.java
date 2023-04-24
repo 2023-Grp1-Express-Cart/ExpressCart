@@ -24,13 +24,13 @@ import javafx.stage.Stage;
  */
 public final class Customer extends VBox {
 
-    private final  ArrayList<Item> _shopping_cart_list;
-    private final  ArrayList<Item> _wish_list;
-    private final  ArrayList<Item> _store_item_list;
+    private final ArrayList<Item> _shopping_cart_list;
+    private final ArrayList<Item> _wish_list;
+    private final ArrayList<Item> _store_item_list;
 
-    private final  ListView<Item> _item_view;
-    private final  ListView<Item> _shopping_cart_view;
-    private final  ListView<Item> _wish_list_view;
+    private final ListView<Item> _item_view;
+    private final ListView<Item> _shopping_cart_view;
+    private final ListView<Item> _wish_list_view;
 
     private final Label labelForSubTotal;
 
@@ -52,6 +52,7 @@ public final class Customer extends VBox {
 
     /**
      * The Constructor for Layout for the Customer Page
+     *
      * @param primaryStage the primary stage for this application, onto which
      * the application scene can be set.
      */
@@ -155,14 +156,14 @@ public final class Customer extends VBox {
         checkoutBtn.setOnAction(e -> {
             updateLabels();
             InventoryMgr.setShoppingCartItemsList(_shopping_cart_list);
-            Scene checkout_scene = SceneGenerator.GetScene(SceneFactory.SceneType.CHECKOUT);
+            Scene checkout_scene = SceneGenerator.getScene(SceneFactory.SceneType.CHECKOUT);
             assert (checkout_scene != null) : "Post Condition: Ensure next scene is valid object";
             primaryStage.setScene(checkout_scene);
         });
 
         customerlogoutBtn = new Button("Log Out");
         customerlogoutBtn.setOnAction(e -> {
-            Scene app_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.APP_HOME);
+            Scene app_home_scene = SceneGenerator.getScene(SceneFactory.SceneType.APP_HOME);
             assert (app_home_scene != null) : "Post Condition: Ensure next scene is valid object";
             primaryStage.setScene(app_home_scene);
         });
@@ -182,7 +183,7 @@ public final class Customer extends VBox {
         Label available_items_label = new Label("Available Items");
         Label shopping_cart_label = new Label("Cart");
         Label wish_list_label = new Label("Wish List");
-        
+
         this.getChildren().add(available_items_label);
         this.getChildren().add(_item_view);
         this.getChildren().add(hb1);
@@ -200,8 +201,8 @@ public final class Customer extends VBox {
      */
     private void updateLabels() {
         subTotal = 0.0;
-        for (Item i : _shopping_cart_list){
-            subTotal+= i.getItemSellPrice();
+        for (Item i : _shopping_cart_list) {
+            subTotal += i.getItemSellPrice();
         }
 
         labelForSubTotal.setText(String.format("Sub Total: $%.2f", subTotal));

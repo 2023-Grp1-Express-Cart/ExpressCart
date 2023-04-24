@@ -4,6 +4,8 @@
  */
 package com.group_one.expresscart;
 
+import java.util.Comparator;
+
 /**
  *
  * @author Group 1
@@ -17,6 +19,7 @@ public final class Item {
 
     /**
      * Constructor for a New Item
+     *
      * @param name The desired name of the Item
      * @param invoice_price The invoice price for the item
      * @param sell_price The sell price for the item
@@ -27,9 +30,10 @@ public final class Item {
         this._invoice_price = invoice_price;
         this._sell_price = sell_price;
     }
-    
+
     /**
      * Constructor for an Item
+     *
      * @param id The ID for the Item
      * @param name The desired name of the Item
      * @param invoice_price The invoice price for the item
@@ -44,6 +48,7 @@ public final class Item {
 
     /**
      * Getter for Item Name.
+     *
      * @return String value of Item name.
      */
     public String getItemName() {
@@ -52,6 +57,7 @@ public final class Item {
 
     /**
      * Getter for Item Sell Price.
+     *
      * @return Item Sell Price.
      */
     public double getItemSellPrice() {
@@ -60,6 +66,7 @@ public final class Item {
 
     /**
      * Getter for Item ID.
+     *
      * @return Item Id.
      */
     public int getItemId() {
@@ -68,6 +75,7 @@ public final class Item {
 
     /**
      * Getter for Item Invoice Price.
+     *
      * @return Item Invoice Price.
      */
     public double getItemInvoicePrice() {
@@ -76,56 +84,92 @@ public final class Item {
 
     /**
      * Setter for Item Name.
+     *
      * @param s The desired name of the item.
      */
     public void setItemName(String s) {
-        assert (s.length() > 0): "Precondition : Item Name length > 0";
+        assert (s.length() > 0) : "Precondition : Item Name length > 0";
         _item_name = s;
     }
 
     /**
      * Setter for Item Sell Price.
+     *
      * @param d The desired value for item sell price.
      */
     public void setItemSellPrice(double d) {
-        assert (d > 0): "Precondition : Item Sell Price > 0";
+        assert (d > 0) : "Precondition : Item Sell Price > 0";
         _sell_price = d;
     }
 
     /**
      * Setter for Item ID
+     *
      * @param i The desired value for Item ID.
      */
     public void setItemId(int i) {
-        assert (i > 0): "Precondition : Item ID > 0";
+        assert (i > 0) : "Precondition : Item ID > 0";
         _id = i;
     }
 
     /**
      * Setter for Item Invoice Price.
+     *
      * @param d The desired value of Item invoice price.
      */
     public void setItemInvoicePrice(double d) {
-        assert (d > 0): "Precondition : Item Invoice Price > 0";
+        assert (d > 0) : "Precondition : Item Invoice Price > 0";
         _invoice_price = d;
     }
 
     /**
+     * Overriding equals() to compare two Item objects
+     *
+     * @param o The other object
+     * @return True if Items are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+
+        // If the object is compared with itself then return true 
+        if (o == this) {
+            return true;
+        }
+
+        /* Check if o is an instance of Item or not
+          "null instanceof [type]" also returns false */
+        if (!(o instanceof Item)) {
+            return false;
+        }
+
+        // typecast o to Complex so that we can compare data members
+        Item i = (Item) o;
+
+        return ((i.getItemId() == this._id)
+                && (i.getItemName().equals(this._item_name))
+                && (Double.compare(i.getItemSellPrice(), this._sell_price) == 0)
+                && (Double.compare(i.getItemInvoicePrice(), this._invoice_price) == 0));
+    }
+
+    /**
      * Method to convert Item data to String representation.
+     *
      * @return String representing Item information.
      */
     @Override
     public String toString() {
-        return String.valueOf(this._id) + "\t" + this._item_name + "\t ($" + this._sell_price + ")";
+        return String.valueOf(this._id) + "\t" + this._item_name + "\t ($"
+                + String.valueOf(this._sell_price) + ")";
     }
 
     /**
      * Method to convert Item data to a CSV string.
+     *
      * @param item The item Object whose data will be converted to CSV String.
      * @return String in CSV format.
      */
     public static String toCsvString(Item item) {
-        assert (item != null): "Precondition : Item not a null object";
+        assert (item != null) : "Precondition : Item not a null object";
         String s = "";
         s += String.valueOf(item.getItemId());
         s += ",";
@@ -137,9 +181,10 @@ public final class Item {
         s += "\n";
         return s;
     }
-    
+
     /**
      * Method to check the validity of the fields of a New Item.
+     *
      * @param name The name of the New item.
      * @param invoice_price The invoice price of the New item.
      * @param sell_price The sell price of the New item.

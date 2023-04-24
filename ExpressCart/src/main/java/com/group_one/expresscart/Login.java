@@ -50,6 +50,7 @@ public final class Login extends GridPane {
 
     /**
      * The Constructor for Layout for the Login Page
+     *
      * @param primaryStage the primary stage for this application, onto which
      * the application scene can be set.
      */
@@ -106,10 +107,10 @@ public final class Login extends GridPane {
                     && password.equals(SELLER_PASSWORD);
 
             if (valid_customer && _customer_account_btn.isSelected()) {
-                Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.CUSTOMER_HOME);
+                Scene s = SceneGenerator.getScene(SceneFactory.SceneType.CUSTOMER_HOME);
                 primaryStage.setScene(s);
             } else if (valid_seller && _seller_account_btn.isSelected()) {
-                Scene s = SceneGenerator.GetScene(SceneFactory.SceneType.SELLER_HOME);
+                Scene s = SceneGenerator.getScene(SceneFactory.SceneType.SELLER_HOME);
                 primaryStage.setScene(s);
             } else {
                 _alert.setContentText("Please enter your correct Username and Password");

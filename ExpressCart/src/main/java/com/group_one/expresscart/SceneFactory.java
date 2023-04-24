@@ -27,9 +27,10 @@ public class SceneFactory {
         APP_HOME
     }
 
+    private static SceneFactory _scene_factory_instance = null;
     private final int WIDTH = 600;
     private final int HEIGHT = 750;
-    private final Stage stage;
+    private Stage stage;
 
     private Scene revenue_scene = null;
     private Scene login_scene = null;
@@ -39,22 +40,45 @@ public class SceneFactory {
     private Scene seller_home_scene = null;
     private Scene app_home_scene = null;
 
-  /**
+    /**
+     * Method to Initialize the Scene Factory Object if it is Null.
+     *
+     * @return The Singleton instance of the Scene Factory Object. Post
+     * conditions Scene Factory object is not Null
+     */
+    public static synchronized SceneFactory getInstance() {
+        if (_scene_factory_instance == null) {
+            _scene_factory_instance = new SceneFactory();
+        }
+
+        assert (_scene_factory_instance != null) : "Postcondition for Valid return of New Object";
+        return _scene_factory_instance;
+    }
+
+    /**
      * Method to Construct the Scene Factory Design
+     */
+    private SceneFactory() {
+    }
+
+    /**
+     * Method to set the Primary Stage for the scene to be rendered on.
+     *
      * @param primaryStage the primary stage for this application, onto which
      * the application scene can be set.
      */
-    public SceneFactory(Stage primaryStage) {
+    public void setPrimaryStage(Stage primaryStage) {
         stage = primaryStage;
     }
 
     /**
      * Method to create a Scene based on the type specified
+     *
      * @param scenetype An enumerated type for the different scenes available.
      * @return a new Scene Object with the specified scene type
      */
-    public Scene GetScene(SceneType scenetype) {
-
+    public Scene getScene(SceneType scenetype) {
+        assert (stage != null) : "Precondition : stage not a null object";
         switch (scenetype) {
             case REVENUE:
                 revenue_scene = new Scene(new Revenue(stage), WIDTH, HEIGHT);

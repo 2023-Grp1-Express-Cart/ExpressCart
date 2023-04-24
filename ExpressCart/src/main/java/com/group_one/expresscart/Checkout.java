@@ -146,7 +146,7 @@ public final class Checkout extends VBox {
                 InventoryMgr.removeItemsFromInventory();
                 updateLabels();
 
-                Scene customer_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.CUSTOMER_HOME);
+                Scene customer_home_scene = SceneGenerator.getScene(SceneFactory.SceneType.CUSTOMER_HOME);
                 assert customer_home_scene != null : "Precondition : Check that value is not null Object";
                 primaryStage.setScene(customer_home_scene);
             }
@@ -154,7 +154,7 @@ public final class Checkout extends VBox {
 
         _return_to_cart = new Button("Return To Cart");
         _return_to_cart.setOnAction(e -> {
-            Scene customer_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.CUSTOMER_HOME);
+            Scene customer_home_scene = SceneGenerator.getScene(SceneFactory.SceneType.CUSTOMER_HOME);
             primaryStage.setScene(customer_home_scene);
         });
 

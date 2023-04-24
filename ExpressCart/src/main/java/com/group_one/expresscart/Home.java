@@ -23,18 +23,19 @@ public final class Home extends VBox {
 
     private final Label _welcome_label;
     private final Button _app_login_btn;
-    
+
     /**
      * The Constructor for Layout for the Home Page
+     *
      * @param primaryStage the primary stage for this application, onto which
      * the application scene can be set.
      */
-    public Home(Stage primaryStage){
-        
+    public Home(Stage primaryStage) {
+
         _welcome_label = new Label("Welcome to ExpressCart");
         _app_login_btn = new Button("Login");
         _app_login_btn.setOnAction(e -> {
-            Scene login_scene = SceneGenerator.GetScene(SceneFactory.SceneType.LOGIN);
+            Scene login_scene = SceneGenerator.getScene(SceneFactory.SceneType.LOGIN);
             assert login_scene != null : "Precondition : Check that value is not null Object";
             primaryStage.setScene(login_scene);
         });

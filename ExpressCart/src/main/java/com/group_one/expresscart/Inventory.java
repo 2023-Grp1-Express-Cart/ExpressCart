@@ -4,7 +4,6 @@
  */
 package com.group_one.expresscart;
 
-
 import static com.group_one.expresscart.ExpressCart.InventoryMgr;
 import static com.group_one.expresscart.ExpressCart.SceneGenerator;
 import java.util.ArrayList;
@@ -40,6 +39,7 @@ public final class Inventory extends VBox {
 
     /**
      * The Constructor for Layout for the Inventory Page
+     *
      * @param primaryStage the primary stage for this application, onto which
      * the application scene can be set.
      */
@@ -175,7 +175,7 @@ public final class Inventory extends VBox {
 
         _seller_home_btn = new Button("Home");
         _seller_home_btn.setOnAction(e -> {
-            Scene seller_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.SELLER_HOME);
+            Scene seller_home_scene = SceneGenerator.getScene(SceneFactory.SceneType.SELLER_HOME);
             assert seller_home_scene != null : "Precondition : Check that value is not null Object";
             primaryStage.setScene(seller_home_scene);
         });

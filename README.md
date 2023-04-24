@@ -1,8 +1,6 @@
 # ExpressCart
 
-Welcome to the ExpressCart Application. This is an application that simulates the user and seller
-experience for running a Shopping Cart Application. For this example we will use this application
-to sell Apple products.
+Welcome to the ExpressCart Application. This is a JavaFx application that simulates the user and seller experience for running a Shopping Cart Application. For this example we will use this application to sell Apple products.
 
 ## Usage
 In order to run the application please use the following command below:
@@ -30,6 +28,7 @@ They are located in the Files directory. Please ensure that this Files directory
 Folder level when running the jar file.
 
 ## Contributions
-Contributions and imporvements are welcomed. Please find the source at:
+Contributions and improvements are welcomed. Please find the source at:
+
 https://github.com/2023-Grp1-Express-Cart/ExpressCart
 

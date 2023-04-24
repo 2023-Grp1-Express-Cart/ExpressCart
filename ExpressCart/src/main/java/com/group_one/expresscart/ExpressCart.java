@@ -1,7 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.group_one.expresscart;
 
 import javafx.application.Application;
@@ -10,11 +9,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * 
+ *
  * @author Group 1
  */
 public final class ExpressCart extends Application {
-
+    
     public static InventoryManager InventoryMgr;
     public static SceneFactory SceneGenerator;
 
@@ -27,7 +26,8 @@ public final class ExpressCart extends Application {
     public void start(Stage primaryStage) throws Exception {
         
         InventoryMgr = InventoryManager.getInstance();
-        SceneGenerator = new SceneFactory(primaryStage);
+        SceneGenerator = SceneFactory.getInstance();
+        SceneGenerator.setPrimaryStage(primaryStage);
         Scene AppHomeScene = new Scene(new Home(primaryStage), 600, 750);
         primaryStage.setTitle("Welcome to ExpressCart");
         primaryStage.setScene(AppHomeScene);
@@ -36,6 +36,7 @@ public final class ExpressCart extends Application {
 
     /**
      * Main method to Launch the application
+     *
      * @param args - the command line arguments passed to the application.
      */
     public static void main(String[] args) {

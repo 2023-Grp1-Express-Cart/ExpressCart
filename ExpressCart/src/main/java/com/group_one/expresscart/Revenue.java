@@ -36,11 +36,12 @@ public class Revenue extends VBox {
 
     /**
      * The Constructor for Layout for the Revenue Page
+     *
      * @param primaryStage the primary stage for this application, onto which
      * the application scene can be set.
      */
     public Revenue(Stage primaryStage) {
-        
+
         ItemQuantityMap = new HashMap<>();
         ItemPriceMap = new HashMap<>();
 
@@ -48,7 +49,7 @@ public class Revenue extends VBox {
         for (Item item : InventoryMgr.getPurchasedItemsList()) {
             increment(ItemQuantityMap, item.getItemName());
             double d = item.getItemInvoicePrice() - item.getItemSellPrice();
-            ItemPriceMap.putIfAbsent(item.getItemName(), d); 
+            ItemPriceMap.putIfAbsent(item.getItemName(), d);
         }
 
         // Configuring category and NumberAxis   
@@ -67,26 +68,26 @@ public class Revenue extends VBox {
                 : ItemQuantityMap.entrySet()) {
             String s = set.getKey();
             Double p = set.getValue() * ItemPriceMap.get(s);
-            profit+= p;
-            int q =  set.getValue();
+            profit += p;
+            int q = set.getValue();
             series.getData().add(new XYChart.Data(s, q));
         }
 
         _home_btn = new Button("Home");
         _home_btn.setOnAction(e -> {
-            Scene seller_home_scene = SceneGenerator.GetScene(SceneFactory.SceneType.SELLER_HOME);
+            Scene seller_home_scene = SceneGenerator.getScene(SceneFactory.SceneType.SELLER_HOME);
             assert seller_home_scene != null : "Precondition : Check that value is not null Object";
             primaryStage.setScene(seller_home_scene);
         });
 
         // Adding series to the barchart   
         _bar_chart.getData().add(series);
-        
+
         profit_label = new Label();
         // FIX ME: Temp Fix to Profit calcualtion
         profit = Math.abs(profit);
         profit_label.setText("Profits From Sales: $" + String.valueOf(profit));
-        
+
         this.getChildren().add(_home_btn);
         this.getChildren().add(profit_label);
         this.getChildren().add(_bar_chart);
@@ -97,9 +98,12 @@ public class Revenue extends VBox {
     /**
      * Method to add Key to a map if the Key doesn't exist, this method will
      * also increment the count of the Key if it exist.
-     * @param <K>
+     *
+     * @param <K> The type of object that the key is.
      * @param map The Map Objects to increment the value.
-     * @param key 
+     * @param key The Key to check if it exists within the map. If it exist,
+     * increment the count. If it is absent from the map, add the key with initial
+     * count of 0.
      */
     public static <K> void increment(Map<K, Integer> map, K key) {
         map.putIfAbsent(key, 0);

@@ -25,29 +25,30 @@ public final class Seller extends VBox {
 
     /**
      * The Constructor for Layout for the Seller Page
+     *
      * @param primaryStage the primary stage for this application, onto which
      * the application scene can be set.
      */
     public Seller(Stage primaryStage) {
-        
+
         _seller_logout_btn = new Button("Log Out");
         _inventory_btn = new Button("Inventory");
         _revenue_btn = new Button("Revenue");
-        
+
         _seller_logout_btn.setOnAction(e -> {
-            Scene login_scene = SceneGenerator.GetScene(SceneFactory.SceneType.LOGIN);
+            Scene login_scene = SceneGenerator.getScene(SceneFactory.SceneType.LOGIN);
             assert login_scene != null : "Precondition : Check that value is not null Object";
             primaryStage.setScene(login_scene);
         });
 
         _inventory_btn.setOnAction(e -> {
-            Scene inventory_scene = SceneGenerator.GetScene(SceneFactory.SceneType.INVENTORY);
+            Scene inventory_scene = SceneGenerator.getScene(SceneFactory.SceneType.INVENTORY);
             assert inventory_scene != null : "Precondition : Check that value is not null Object";
             primaryStage.setScene(inventory_scene);
         });
 
         _revenue_btn.setOnAction(e -> {
-            Scene revenue_scene = SceneGenerator.GetScene(SceneFactory.SceneType.REVENUE);
+            Scene revenue_scene = SceneGenerator.getScene(SceneFactory.SceneType.REVENUE);
             assert revenue_scene != null : "Precondition : Check that value is not null Object";
             primaryStage.setScene(revenue_scene);
         });
