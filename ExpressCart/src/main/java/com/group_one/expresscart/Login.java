@@ -23,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
+ * Class that Renders the Layout for User Login Page.
  *
  * @author Group 1
  */

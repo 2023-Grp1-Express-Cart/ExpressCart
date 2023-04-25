@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Factory Method to create appropriate Scene object.
+ * Singleton Factory Method to create appropriate Scene object.
  *
  * @author Group 1
  */

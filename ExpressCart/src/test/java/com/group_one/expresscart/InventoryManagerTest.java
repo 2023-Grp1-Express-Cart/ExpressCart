@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
+ * Class for Testing all methods of the InventoryManager class.
  *
  * @author Group 1
  */

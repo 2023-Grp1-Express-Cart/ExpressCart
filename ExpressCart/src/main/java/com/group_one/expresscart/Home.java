@@ -5,8 +5,6 @@
 package com.group_one.expresscart;
 
 import static com.group_one.expresscart.ExpressCart.SceneGenerator;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,7 +14,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- *
+ * Class that Renders the Layout for User Home Page.
+ * 
  * @author Group 1
  */
 public final class Home extends VBox {

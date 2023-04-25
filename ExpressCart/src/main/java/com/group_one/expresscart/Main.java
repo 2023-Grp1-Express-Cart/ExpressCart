@@ -5,6 +5,7 @@
 package com.group_one.expresscart;
 
 /**
+ * Main Class that Runs the ExpressCart Application.
  *
  * @author Group 1
  */

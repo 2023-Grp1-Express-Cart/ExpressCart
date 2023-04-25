@@ -7,7 +7,8 @@ package com.group_one.expresscart;
 import java.util.Comparator;
 
 /**
- *
+ * Class with helper methods necessary for Sorting Items in a list.
+ * 
  * @author Group 1
  */
 public class ItemSortHelper {

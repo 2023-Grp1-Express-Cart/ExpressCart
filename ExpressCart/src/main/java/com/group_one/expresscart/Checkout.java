@@ -32,7 +32,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- *
+ * Class that Renders the Layout for Customer Checkout Page.
+ * 
  * @author Group 1
  */
 public final class Checkout extends VBox {

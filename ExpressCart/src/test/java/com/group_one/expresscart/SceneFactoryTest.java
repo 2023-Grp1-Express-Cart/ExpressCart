@@ -4,18 +4,16 @@
  */
 package com.group_one.expresscart;
 
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- *
+ * Class for testing the SceneFactory class.
+ * 
  * @author Group 1
  */
 public class SceneFactoryTest {

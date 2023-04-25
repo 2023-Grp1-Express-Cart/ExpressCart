@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- *
+ * Class for Testing all methods of the Item class.
+ * 
  * @author Group 1
  */
 public class ItemTest {

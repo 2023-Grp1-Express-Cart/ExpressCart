@@ -14,7 +14,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- *
+ * Class that Renders the Layout for Seller Home Page.
+ * 
  * @author Group 1
  */
 public final class Seller extends VBox {

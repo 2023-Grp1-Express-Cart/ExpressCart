@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * Singleton class that handles the transaction of items
+ * Singleton class that handles the transaction of items.
  *
  * @author Group 1
  */

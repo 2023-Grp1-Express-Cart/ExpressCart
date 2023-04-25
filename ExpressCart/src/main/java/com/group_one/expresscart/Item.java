@@ -4,10 +4,9 @@
  */
 package com.group_one.expresscart;
 
-import java.util.Comparator;
-
 /**
- *
+ * Class that defines the methods of an Item.
+ * 
  * @author Group 1
  */
 public final class Item {

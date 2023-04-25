@@ -9,7 +9,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ * Class that Launches the JavaFx Application
+ * 
  * @author Group 1
  */
 public final class ExpressCart extends Application {
@@ -24,7 +25,6 @@ public final class ExpressCart extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        
         InventoryMgr = InventoryManager.getInstance();
         SceneGenerator = SceneFactory.getInstance();
         SceneGenerator.setPrimaryStage(primaryStage);

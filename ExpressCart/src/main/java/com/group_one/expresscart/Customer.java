@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
+ * Class that Renders the Layout for Customer Home Page.
  *
  * @author Group 1
  */

@@ -23,6 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
+ * Class that Renders the Layout for Seller Inventory Page.
  *
  * @author Group 1
  */

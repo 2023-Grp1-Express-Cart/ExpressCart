@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
+ * Class that Renders the Layout for Seller Revenue Page.
  *
  * @author Group 1
  */
